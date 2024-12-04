@@ -1,5 +1,7 @@
 package io.msh.backend.service;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -11,6 +13,7 @@ import io.msh.backend.domain.Member;
 import io.msh.backend.domain.RefreshToken;
 import io.msh.backend.dto.KeyPair;
 import io.msh.backend.dto.MemberDetail;
+import io.msh.backend.dto.TokenBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -90,6 +93,22 @@ public class JwtTokenProvider {
         }
 
         return false;
+    }
+
+    public TokenBody parseJwt(String token) {
+
+        Jws<Claims> parsed = Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token);
+
+        String memberId = parsed.getPayload().getSubject();
+        Object role = parsed.getPayload().get("role");
+
+        return new TokenBody(
+                Long.parseLong(memberId),
+                role.toString()
+        );
     }
 
 }

@@ -1,8 +1,7 @@
 package io.msh.backend.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import io.msh.backend.domain.Member;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +13,7 @@ import java.util.Map;
 
 @Getter
 @Accessors(chain = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDetail implements OAuth2User {
 
     @Setter
@@ -26,6 +26,18 @@ public class MemberDetail implements OAuth2User {
     private String role;
 
     private Map<String, Object> attributes;
+
+    public static MemberDetail from(Member member) {
+
+        MemberDetail memberDetail = new MemberDetail();
+
+        memberDetail.id = member.getId();
+        memberDetail.email = member.getEmail();
+        memberDetail.name = member.getUsername();
+        memberDetail.role = member.getRole();
+
+        return memberDetail;
+    }
 
     @Builder
     public MemberDetail(String name, String email, Map<String, Object> attributes) {

@@ -3,6 +3,7 @@ package io.msh.backend.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
+@Accessors(chain = true)
 public class MemberDetail implements OAuth2User {
 
     @Setter

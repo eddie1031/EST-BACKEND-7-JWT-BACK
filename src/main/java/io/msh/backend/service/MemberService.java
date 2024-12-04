@@ -45,7 +45,8 @@ public class MemberService extends DefaultOAuth2UserService {
         );
 
         if ( findMember.getProvider().equals(provider) ) {
-            return memberDetail;
+//            return memberDetail;
+            return memberDetail.setId(findMember.getId()).setRole(findMember.getRole());
         } else {
             throw new RuntimeException();
         }

@@ -21,7 +21,7 @@ public class Member {
     private String email;
 
     @Setter
-    private String role = "USER";
+    private String role = "MEMBER";
 
     private LocalDateTime signedAt = LocalDateTime.now();
 
